@@ -1,0 +1,4 @@
+// robot.txt - avoid crawling
+
+User-agent: *
+Disallow: /
