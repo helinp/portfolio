@@ -3,6 +3,6 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   integrations: [tailwind()],
-  output: 'static',
-  base: '/portfolio/',
+  site: 'https://helinp.github.io',
+  base: 'portfolio',
 });
