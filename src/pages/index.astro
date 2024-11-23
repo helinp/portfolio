@@ -1,0 +1,40 @@
+---
+import { getProjects } from "../helpers/projects.js";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+
+const projects = await getProjects();
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title="Portfolio" />
+  </head>
+  <body>
+    <header class="text-center p-6">
+      <h1 class="text-4xl font-bold">PierreH</h1>
+    </header>
+    <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {projects && projects.length > 0 ? (
+        projects.map((project) => (
+          <article class="max-w-full mb-4" aria-labelledby={`project-${project.slug}`}>
+            <h2 id={`project-${project.slug}`} class="text-xl font-bold">{project.title}</h2>
+            <div class="grid gap-2 mt-1 project-cover">
+              <a href={`/projects/${project.slug}`}>
+                <img
+                  src={project.images[0]}
+                  alt={`Cover image for ${project.title}`}
+                  class="cursor-pointer w-full h-auto max-w-[25vw] sm:max-w-full border border-gray-200"
+                  loading="lazy"
+                />
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <p class="text-center">No projects available.</p>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>

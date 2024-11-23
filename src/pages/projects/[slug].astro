@@ -1,0 +1,107 @@
+---
+import { getProjects } from "../../helpers/projects.js";
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+
+// Cette fonction génère une liste de tous les slugs disponibles
+export async function getStaticPaths() {
+    const projects = await getProjects();
+
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+    }));
+}
+
+// Récupère le slug depuis l'URL
+const { slug } = Astro.params;
+
+// Charge les données pour le projet correspondant
+let project;
+try {
+    project = await getProjects().then((projects) =>
+        projects.find((p) => p.slug === slug)
+    );
+    if (!project) throw new Error(`Project "${slug}" not found`);
+} catch (err) {
+    console.error(err);
+    throw new Error(`Project "${slug}" not found`);
+}
+---
+
+<html lang="en">
+    <head>
+        <BaseHead title={project.title} />
+    </head>
+    <body>
+        <header class="flex items-center justify-between p-6">
+            <a href="/" class="text-3xl font-medium custom-hover">&lsaquo;&lsaquo;</a>
+            <h1 class="text-4xl font-bold text-center flex-grow">PierreH</h1>
+          </header>
+        <main class="p-6">
+            <div
+                class={`grid sm:gap-2 gap-4 ${
+                    project.descriptions.fr && project.descriptions.en
+                        ? "sm:grid-cols-2"
+                        : "sm:grid-cols-1"
+                }`}
+            >
+                {
+                    project.descriptions.fr && (
+                        <div class="prose mb-2 bg-white p-4 border border-gray-200">
+                            <div set:html={project.descriptions.fr} />
+                        </div>
+                    )
+                }
+                {
+                    project.descriptions.en && (
+                        <div class="prose mb-2 bg-white p-4 border border-gray-200">
+                            <div set:html={project.descriptions.en} />
+                        </div>
+                    )
+                }
+            </div>
+            <div class="grid gap-4">
+                <div
+                    id="imageGrid"
+                    class="grid xs:grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-2"
+                >
+                    {
+                        project.images?.map((image) => (
+                            <img
+                                src={image}
+                                alt={project.title}
+                                class="project-cover w-full h-auto cursor-pointer border border-gray-200"
+                                loading="lazy"
+                            />
+                        )) || <p>No images available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div
+                id="imageModal"
+                class="hidden fixed inset-0 bg-gray-50 bg-opacity-100 flex items-center justify-center z-50"
+                role="dialog"
+                aria-labelledby="modalImage"
+                aria-hidden="true"
+            >
+                <img
+                    id="modalImage"
+                    src=""
+                    alt="Expanded view"
+                    class="max-w-full max-h-full"
+                />
+                <button
+                    id="closeModalButton"
+                    class="absolute top-4 right-4 text-gray-700 text-3xl font-bold"
+                    aria-label="Close modal"
+                >
+                    &times;
+                </button>
+            </div>
+        </main>
+        <Footer />
+        <script type="module" src="/src/helpers/imageModal.js"></script>
+    </body>
+</html>

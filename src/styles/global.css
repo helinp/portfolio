@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+:root {
+    --background-color: #fbfbfb;
+    --transition-delay: 0.5s;
+}
+
+body {
+    font-family: "Quicksand", sans-serif;
+    --dot-bg: #fbfbfb;
+    --dot-color: gray;
+    --dot-size: 1px;
+    --dot-space: 22px;
+    background: linear-gradient(
+                90deg,
+                var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
+                transparent 1%
+            )
+            center / var(--dot-space) var(--dot-space),
+        linear-gradient(
+                var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
+                transparent 1%
+            )
+            center / var(--dot-space) var(--dot-space),
+        var(--dot-color);
+    background-attachment: fixed;
+}
+
+.project-cover a img {
+    object-fit: cover;
+    height: 25vh;
+    object-position: left top;
+    min-height: 200px;
+}
+
+.project-cover {
+    transform: scale(1);
+    transition: transform 0.5s ease;
+}
+
+.project-cover:hover {
+    transform: scale(1.01);
+    transition: transform 0.5s ease;
+}
+
+.custom-hover:hover {
+    color: rgb(221, 15, 101);
+    transition: color 0.5s ease;
+}
