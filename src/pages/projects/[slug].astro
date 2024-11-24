@@ -30,12 +30,12 @@ try {
 
 <html lang="en">
     <head>
-        <BaseHead title={project.title} />
+        <BaseHead title={project.slug} />
     </head>
     <body>
         <header class="flex items-center justify-between p-6">
             <a href="/" class="text-3xl font-medium custom-hover">&lsaquo;&lsaquo;</a>
-            <h1 class="text-4xl font-bold text-center flex-grow">PierreH</h1>
+            <h1 class="text-4xl font-bold text-center flex-grow">PierreH | {project.title}</h1>
           </header>
         <main class="p-6">
             <div
@@ -102,6 +102,6 @@ try {
             </div>
         </main>
         <Footer />
-        <script type="module" src="/src/helpers/imageModal.js"></script>
+        <script type="module" src="/helpers/imageModal.js"></script>
     </body>
 </html>
