@@ -1,4 +1,4 @@
-# HelinP Portfolio
+# Portfolio
 
 **Live website:** [https://portfolio.pierrehelin.eu](https://portfolio.pierrehelin.eu)
 
