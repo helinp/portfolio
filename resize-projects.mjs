@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const sourceBase = path.join(__dirname, 'projects-src');
 const destBase = path.join(__dirname, 'public/projects');
-const targetWidth = 800;
+const targetWidth = 1000;
 
 function processFolder(subfolder) {
   const srcFolder = path.join(sourceBase, subfolder);
