@@ -37,7 +37,7 @@ try {
             <a href="/" class="text-3xl font-medium custom-hover">&lsaquo;&lsaquo;</a>
             <h1 class="text-4xl font-bold text-center flex-grow">PierreH | {project.title}</h1>
           </header>
-        <main class="p-6">
+        <main class="p-6" role="main">
             <div
                 class={`grid sm:gap-2 gap-4 ${
                     project.descriptions.fr && project.descriptions.en
@@ -47,14 +47,16 @@ try {
             >
                 {
                     project.descriptions.fr && (
-                        <div class="prose mb-2 bg-white p-4 border border-gray-200">
+                        <div class="prose mb-2 bg-white p-4 border border-gray-200 description-div" lang="fr">
+                            <h2 style="display:none;">Description du projet</h2>
                             <div set:html={project.descriptions.fr} />
                         </div>
                     )
                 }
                 {
                     project.descriptions.en && (
-                        <div class="prose mb-2 bg-white p-4 border border-gray-200">
+                        <div class="prose mb-2 bg-white p-4 border border-gray-200 description-div" lang="en">
+                            <h2 style="display:none;">Project description</h2>
                             <div set:html={project.descriptions.en} />
                         </div>
                     )
@@ -65,16 +67,22 @@ try {
                     id="imageGrid"
                     class="grid xs:grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-2"
                 >
-                    {
-                        project.images?.map((image) => (
+                {
+                    project.images?.map((image) => {
+                        const fileName = image.split("/").pop().split(".")[0]
+                            .replace(/[-_]/g, " ")
+                            .replace(/\b\w/g, c => c.toUpperCase());
+                        return (
                             <img
                                 src={image}
-                                alt={project.title}
+                                alt={`${fileName}`}
                                 class="project-cover w-full h-auto cursor-pointer border border-gray-200"
                                 loading="lazy"
                             />
-                        )) || <p>No images available.</p>
-                    }
+                        );
+                    }) || <p>No images available.</p>
+                }
+
                 </div>
             </div>
 
